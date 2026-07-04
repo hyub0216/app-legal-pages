@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>모바일 청첩장</title>
+<meta property="og:title" content="모바일 청첩장">
+<meta property="og:description" content="결혼합니다. 귀한 걸음으로 축복해 주세요.">
+<style>
+  :root{
+    --cream:#FBF7F3; --ink:#2B2621; --subtle:#8C827A;
+    --bg:#F5E6E6; --accent:#C26B78; --card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--cream);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .serif{font-family:"Nanum Myeongjo","Apple SD Gothic Neo",Georgia,serif}
+  .wrap{max-width:460px;margin:0 auto;padding:22px 18px 60px}
+  .card{background:var(--bg);border-radius:24px;overflow:hidden;
+    border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
+    box-shadow:0 18px 50px rgba(0,0,0,.08)}
+  .cover{height:300px;width:100%;object-fit:cover;display:block;background:
+    linear-gradient(180deg,color-mix(in srgb,var(--accent) 35%,transparent),var(--bg))}
+  .cover-empty{display:flex;align-items:center;justify-content:center;font-size:52px;
+    color:color-mix(in srgb,var(--accent) 60%,transparent)}
+  .body{padding:30px 26px 34px;text-align:center}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:5px;color:var(--accent);margin-bottom:18px}
+  .names{font-size:30px;font-weight:600;line-height:1.3}
+  .rule{width:44px;height:1px;background:var(--accent);margin:20px auto;opacity:.6}
+  .greeting{font-size:15.5px;line-height:2;color:color-mix(in srgb,var(--ink) 82%,transparent);
+    white-space:pre-line}
+  .gallery{display:flex;gap:10px;overflow-x:auto;margin:24px -4px 0;padding:0 4px 4px;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .gallery img{height:210px;min-width:158px;object-fit:cover;border-radius:14px;scroll-snap-align:center}
+  .info{margin-top:26px;padding:16px;border-radius:14px;background:rgba(255,255,255,.55)}
+  .info .when{font-size:16px;font-weight:600}
+  .info .where{font-size:14px;margin-top:5px;color:color-mix(in srgb,var(--ink) 80%,transparent)}
+  .map{margin-top:14px;border-radius:14px;overflow:hidden;border:0}
+  .map iframe{display:block;width:100%;height:220px;border:0}
+  .dirs{display:block;margin-top:10px;padding:13px;border-radius:12px;text-decoration:none;
+    background:rgba(255,255,255,.7);color:var(--accent);font-weight:600;font-size:14px}
+  .contact{display:inline-block;margin-top:22px;padding:11px 20px;border-radius:999px;
+    text-decoration:none;font-size:14px;font-weight:600;color:#fff;background:var(--accent)}
+  .foot{text-align:center;color:var(--subtle);font-size:12px;margin-top:26px;line-height:1.7}
+  .state{text-align:center;padding:80px 20px;color:var(--subtle)}
+  .spin{width:26px;height:26px;border-radius:50%;margin:0 auto 14px;
+    border:3px solid #e6ddd4;border-top-color:var(--accent);animation:s 1s linear infinite}
+  @keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="wrap" id="root">
+  <div class="state"><div class="spin"></div>청첩장을 불러오는 중…</div>
+</div>
+
+<script>
+// ── 설정: Supabase 프로젝트 생성 후 채운다(공개 키라 노출 안전) ─────────────
+const SUPABASE_URL  = "https://ksooqizjlahwhcahmiyh.supabase.co";
+const SUPABASE_ANON = "sb_publishable_-LTIircJVb6dU0rxktPo1A_AmeJsEZH";
+const BUCKET = "invitation-photos";
+// ─────────────────────────────────────────────────────────────────────────
+
+const TEMPLATES = {
+  "블라썸":  {bg:"#F5E6E6", accent:"#C26B78"},
+  "클래식":  {bg:"#FAF7F0", accent:"#D1A359"},
+  "모던":    {bg:"#F2F2F5", accent:"#2B2621"},
+};
+
+const root = document.getElementById("root");
+const esc = s => (s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const publicURL = p => `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${p}`;
+
+function fmtDate(iso){
+  if(!iso) return "";
+  const d = new Date(iso);
+  if(isNaN(d)) return "";
+  const wd = ["일","월","화","수","목","금","토"][d.getDay()];
+  let h = d.getHours(); const m = d.getMinutes();
+  const ap = h < 12 ? "오전" : "오후"; h = h % 12 || 12;
+  const mm = m ? ` ${m}분` : "";
+  return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${wd}) ${ap} ${h}시${mm}`;
+}
+
+function showState(msg){ root.innerHTML = `<div class="state">${msg}</div>`; }
+
+function render(inv){
+  const t = TEMPLATES[inv.template] || TEMPLATES["블라썸"];
+  document.documentElement.style.setProperty("--bg", t.bg);
+  document.documentElement.style.setProperty("--accent", t.accent);
+
+  const groom = esc(inv.groom || "신랑"), bride = esc(inv.bride || "신부");
+  document.title = `${groom} ♥ ${bride} 결혼합니다`;
+
+  const cover = inv.cover_path
+    ? `<img class="cover" src="${publicURL(inv.cover_path)}" alt="">`
+    : `<div class="cover cover-empty">🌷</div>`;
+
+  const gallery = (inv.photo_paths && inv.photo_paths.length)
+    ? `<div class="gallery">${inv.photo_paths.map(p=>`<img src="${publicURL(p)}" alt="">`).join("")}</div>`
+    : "";
+
+  const where = [inv.venue_name, inv.venue_hall].filter(Boolean).map(esc).join(" ");
+
+  let map = "";
+  if(inv.show_map && inv.venue_lat && inv.venue_lng){
+    const la = inv.venue_lat, ln = inv.venue_lng;
+    const bbox = `${ln-0.004},${la-0.003},${ln+0.004},${la+0.003}`;
+    map = `<div class="map"><iframe loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${la},${ln}"></iframe></div>
+      <a class="dirs" href="https://www.google.com/maps/search/?api=1&query=${la},${ln}" target="_blank" rel="noopener">📍 길찾기</a>`;
+  } else if(inv.venue_address){
+    map = `<div class="info"><div class="where">${esc(inv.venue_address)}</div></div>`;
+  }
+
+  const contact = inv.contact_phone
+    ? `<a class="contact" href="tel:${esc(inv.contact_phone)}">📞 연락하기</a>` : "";
+
+  root.innerHTML = `
+    <div class="card">
+      ${cover}
+      <div class="body">
+        <div class="eyebrow">결혼합니다</div>
+        <div class="names serif">${groom} · ${bride}</div>
+        <div class="rule"></div>
+        <div class="greeting">${esc(inv.greeting || "")}</div>
+        ${gallery}
+        <div class="info">
+          <div class="when">${fmtDate(inv.wedding_date)}</div>
+          ${where ? `<div class="where">${where}</div>` : ""}
+        </div>
+        ${map}
+        ${contact}
+      </div>
+    </div>
+    <div class="foot">노머니웨딩 · 이 청첩장은 예식 후에도 사라지지 않습니다</div>`;
+}
+
+async function load(){
+  const id = new URLSearchParams(location.search).get("id");
+  if(!id){ return showState("잘못된 링크예요."); }
+  if(SUPABASE_URL.includes("YOUR_PROJECT")){ return showState("아직 준비 중이에요."); }
+  try{
+    // 새 publishable 키는 JWT가 아니라 apikey 헤더로만 보낸다(Authorization Bearer 금지).
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/invitations?id=eq.${encodeURIComponent(id)}&select=*`,
+      {headers:{apikey:SUPABASE_ANON}});
+    if(!r.ok) throw new Error(r.status);
+    const rows = await r.json();
+    if(!rows.length) return showState("청첩장을 찾을 수 없어요.");
+    render(rows[0]);
+  }catch(e){ showState("불러오지 못했어요. 잠시 후 다시 시도해 주세요."); }
+}
+load();
+</script>
+</body>
+</html>
