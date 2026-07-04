@@ -20,28 +20,74 @@
   .card{background:var(--bg);border-radius:24px;overflow:hidden;
     border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
     box-shadow:0 18px 50px rgba(0,0,0,.08)}
-  .cover{height:300px;width:100%;object-fit:cover;display:block;background:
+  .body{padding:30px 26px 34px;text-align:center;display:flex;flex-direction:column;gap:20px}
+  .body.left{text-align:left;align-items:flex-start}
+
+  /* 커버 스타일 */
+  .cover-full{display:block;width:100%;height:300px;object-fit:cover;background:
     linear-gradient(180deg,color-mix(in srgb,var(--accent) 35%,transparent),var(--bg))}
   .cover-empty{display:flex;align-items:center;justify-content:center;font-size:52px;
     color:color-mix(in srgb,var(--accent) 60%,transparent)}
-  .body{padding:30px 26px 34px;text-align:center}
-  .eyebrow{font-size:12px;font-weight:600;letter-spacing:5px;color:var(--accent);margin-bottom:18px}
-  .names{font-size:30px;font-weight:600;line-height:1.3}
-  .rule{width:44px;height:1px;background:var(--accent);margin:20px auto;opacity:.6}
-  .greeting{font-size:15.5px;line-height:2;color:color-mix(in srgb,var(--ink) 82%,transparent);
-    white-space:pre-line}
-  .gallery{display:flex;gap:10px;overflow-x:auto;margin:24px -4px 0;padding:0 4px 4px;
-    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
-  .gallery img{height:210px;min-width:158px;object-fit:cover;border-radius:14px;scroll-snap-align:center}
-  .info{margin-top:26px;padding:16px;border-radius:14px;background:rgba(255,255,255,.55)}
+  .cover-arch{margin:26px 26px 0}
+  .cover-arch .img{width:100%;height:270px;object-fit:cover;border-radius:200px 200px 14px 14px}
+  .cover-framed{margin:20px}
+  .cover-framed .img{width:100%;height:220px;object-fit:cover;border-radius:14px;
+    border:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
+  .cover-circle{display:flex;justify-content:center;margin-top:30px}
+  .cover-circle .img{width:150px;height:150px;object-fit:cover;border-radius:50%;
+    border:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
+  .cover-polaroid{margin:30px 30px 6px;background:#fff;padding:12px;border-radius:4px;
+    transform:rotate(-2deg);box-shadow:0 8px 20px rgba(0,0,0,.12)}
+  .cover-polaroid .img{width:100%;height:220px;object-fit:cover;display:block}
+  .cover-polaroid .pcap{text-align:center;margin-top:10px;font-size:15px;color:rgba(43,38,33,.7)}
+  .cover-overlay{position:relative}
+  .cover-overlay .img{width:100%;height:380px;object-fit:cover;display:block}
+  .cover-overlay .grad{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.55))}
+  .cover-overlay .otext{position:absolute;left:0;right:0;bottom:28px;text-align:center;color:#fff;
+    text-shadow:0 2px 6px rgba(0,0,0,.35)}
+  .cover-overlay .otext .nm{font-size:30px;font-weight:600}
+  .cover-overlay .otext .dt{font-size:14px;margin-top:8px;opacity:.92}
+
+  /* 텍스트 */
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:5px;color:var(--accent)}
+  .names{font-weight:600;line-height:1.3}
+  .rule{width:44px;height:1px;background:var(--accent);opacity:.6}
+  .parents{font-size:13.5px;line-height:1.9;color:rgba(43,38,33,.7)}
+  .gtitle{font-size:16px;font-weight:600}
+  .greeting{font-size:15.5px;line-height:2;color:rgba(43,38,33,.82);white-space:pre-line}
+  .closing{font-size:14px;font-weight:500;color:rgba(43,38,33,.7)}
+
+  /* 갤러리 */
+  .g-slider{display:flex;gap:10px;overflow-x:auto;margin:0 -4px;padding:0 4px 4px;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;width:100%}
+  .g-slider figure{flex:0 0 auto;width:158px}
+  .g-slider img{width:158px;height:210px;object-fit:cover;border-radius:14px;scroll-snap-align:center}
+  .g-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+  .g-grid img{width:100%;height:150px;object-fit:cover;border-radius:10px}
+  .g-vert{display:flex;flex-direction:column;gap:10px;width:100%}
+  .g-vert img{width:100%;height:240px;object-fit:cover;border-radius:12px}
+  figure{margin:0}
+  figcaption{font-size:11px;color:rgba(43,38,33,.6);margin-top:4px;text-align:center}
+
+  /* 정보/지도/계좌 */
+  .info{width:100%;padding:16px;border-radius:14px;background:rgba(255,255,255,.55)}
   .info .when{font-size:16px;font-weight:600}
-  .info .where{font-size:14px;margin-top:5px;color:color-mix(in srgb,var(--ink) 80%,transparent)}
-  .map{margin-top:14px;border-radius:14px;overflow:hidden;border:0}
+  .info .where{font-size:14px;margin-top:5px;color:rgba(43,38,33,.8)}
+  .bigdate{width:100%}
+  .bigdate .d{font-size:38px;font-weight:800;color:var(--accent);letter-spacing:.5px}
+  .bigdate .w{font-size:14px;color:rgba(43,38,33,.7);margin-top:2px}
+  .map{width:100%;border-radius:14px;overflow:hidden;border:0}
   .map iframe{display:block;width:100%;height:220px;border:0}
-  .dirs{display:block;margin-top:10px;padding:13px;border-radius:12px;text-decoration:none;
-    background:rgba(255,255,255,.7);color:var(--accent);font-weight:600;font-size:14px}
-  .contact{display:inline-block;margin-top:22px;padding:11px 20px;border-radius:999px;
-    text-decoration:none;font-size:14px;font-weight:600;color:#fff;background:var(--accent)}
+  .dirs{display:block;width:100%;margin-top:10px;padding:13px;border-radius:12px;text-decoration:none;
+    background:rgba(255,255,255,.7);color:var(--accent);font-weight:600;font-size:14px;text-align:center}
+  .account{width:100%;padding:16px;border-radius:14px;background:rgba(255,255,255,.55)}
+  .account .h{font-size:13px;font-weight:600;letter-spacing:2px;color:var(--accent);text-align:center;margin-bottom:12px}
+  .acc-row{display:flex;align-items:center;gap:10px;padding:6px 0}
+  .acc-row .side{font-size:12px;font-weight:600;color:var(--accent);width:44px;flex:0 0 auto}
+  .acc-row .val{font-size:13px;color:rgba(43,38,33,.85);flex:1;text-align:left}
+  .acc-row button{border:0;background:transparent;color:var(--accent);font-size:15px;cursor:pointer}
+  .contact{display:inline-block;padding:11px 20px;border-radius:999px;text-decoration:none;
+    font-size:14px;font-weight:600;color:#fff;background:var(--accent)}
   .foot{text-align:center;color:var(--subtle);font-size:12px;margin-top:26px;line-height:1.7}
   .state{text-align:center;padding:80px 20px;color:var(--subtle)}
   .spin{width:26px;height:26px;border-radius:50%;margin:0 auto 14px;
@@ -55,80 +101,168 @@
 </div>
 
 <script>
-// ── 설정: Supabase 프로젝트 생성 후 채운다(공개 키라 노출 안전) ─────────────
+// ── 설정 ─────────────────────────────────────────────────────────────────
 const SUPABASE_URL  = "https://ksooqizjlahwhcahmiyh.supabase.co";
 const SUPABASE_ANON = "sb_publishable_-LTIircJVb6dU0rxktPo1A_AmeJsEZH";
 const BUCKET = "invitation-photos";
 // ─────────────────────────────────────────────────────────────────────────
 
 const TEMPLATES = {
-  "블라썸":  {bg:"#F5E6E6", accent:"#C26B78"},
-  "클래식":  {bg:"#FAF7F0", accent:"#D1A359"},
-  "모던":    {bg:"#F2F2F5", accent:"#2B2621"},
+  "블라썸": {bg:"#F5E6E6", accent:"#C26B78"},
+  "클래식": {bg:"#FAF7F0", accent:"#D1A359"},
+  "모던":   {bg:"#F2F2F5", accent:"#2B2621"},
+};
+
+const LAYOUTS = {
+  "클래식":   {cover:"full",    align:"center", serif:true,  size:30, eyebrow:true},
+  "아치":     {cover:"arch",    align:"center", serif:true,  size:30, eyebrow:true},
+  "오버레이": {cover:"overlay", align:"center", serif:false, size:30, eyebrow:false},
+  "미니멀":   {cover:"none",    align:"center", serif:true,  size:38, eyebrow:false},
+  "폴라로이드":{cover:"polaroid",align:"center", serif:false, size:28, eyebrow:true},
+  "매거진":   {cover:"full",    align:"left",   serif:true,  size:34, eyebrow:true},
+  "모노그램": {cover:"circle",  align:"center", serif:true,  size:28, eyebrow:true},
+  "필름":     {cover:"full",    align:"center", serif:false, size:28, eyebrow:true, gallery:"vertical"},
+  "프레임":   {cover:"framed",  align:"center", serif:true,  size:28, eyebrow:true},
+  "캘린더":   {cover:"full",    align:"center", serif:false, size:28, eyebrow:false, bigDate:true},
 };
 
 const root = document.getElementById("root");
 const esc = s => (s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const publicURL = p => `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${p}`;
+const pub = p => `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${p}`;
+const trim = s => (s ?? "").trim();
 
 function fmtDate(iso){
   if(!iso) return "";
-  const d = new Date(iso);
-  if(isNaN(d)) return "";
+  const d = new Date(iso); if(isNaN(d)) return "";
   const wd = ["일","월","화","수","목","금","토"][d.getDay()];
   let h = d.getHours(); const m = d.getMinutes();
   const ap = h < 12 ? "오전" : "오후"; h = h % 12 || 12;
-  const mm = m ? ` ${m}분` : "";
-  return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${wd}) ${ap} ${h}시${mm}`;
+  return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${wd}) ${ap} ${h}시${m?` ${m}분`:""}`;
+}
+function numericDate(iso){ const d=new Date(iso); return isNaN(d)?"":`${d.getFullYear()}. ${d.getMonth()+1}. ${d.getDate()}`; }
+function weekdayTime(iso){
+  const d=new Date(iso); if(isNaN(d)) return "";
+  const wd=["일","월","화","수","목","금","토"][d.getDay()];
+  let h=d.getHours(); const m=d.getMinutes(); const ap=h<12?"오전":"오후"; h=h%12||12;
+  return `(${wd}) ${ap} ${h}시${m?` ${m}분`:""}`;
+}
+function parentsLine(f, m, order, child){
+  f=trim(f); m=trim(m); if(!f && !m) return null;
+  const p=[f,m].filter(Boolean).join(" · ");
+  return `${p}의 ${order}${child?" "+esc(child):""}`;
+}
+function showState(msg){ root.innerHTML = `<div class="state">${msg}</div>`; }
+window.copyAcc = (btn, text) => { navigator.clipboard?.writeText(text); btn.textContent="✓"; setTimeout(()=>btn.textContent="⧉",1200); };
+
+function coverHTML(spec, coverUrl, names, dateStr){
+  const img = coverUrl
+    ? `<img class="img" src="${coverUrl}" alt="">`
+    : `<div class="img cover-empty" style="height:100%">🌷</div>`;
+  switch(spec.cover){
+    case "full":     return coverUrl ? `<img class="cover-full" src="${coverUrl}" alt="">` : `<div class="cover-full cover-empty">🌷</div>`;
+    case "arch":     return `<div class="cover-arch">${img}</div>`;
+    case "framed":   return `<div class="cover-framed">${img}</div>`;
+    case "circle":   return `<div class="cover-circle">${img}</div>`;
+    case "polaroid": return `<div class="cover-polaroid">${img}<div class="pcap">${names}</div></div>`;
+    case "overlay":  return `<div class="cover-overlay">${img}<div class="grad"></div>
+                       <div class="otext"><div class="nm">${names}</div><div class="dt">${dateStr}</div></div></div>`;
+    case "none":     return "";
+  }
+  return "";
 }
 
-function showState(msg){ root.innerHTML = `<div class="state">${msg}</div>`; }
+function galleryHTML(style, photos){
+  if(!photos.length) return "";
+  const cls = style==="그리드"?"g-grid":style==="세로"?"g-vert":"g-slider";
+  const items = photos.map(p=>{
+    const cap = trim(p.caption) ? `<figcaption>${esc(p.caption)}</figcaption>` : "";
+    return `<figure><img src="${p.url}" alt="">${cap}</figure>`;
+  }).join("");
+  return `<div class="${cls}">${items}</div>`;
+}
 
-function render(inv){
-  const t = TEMPLATES[inv.template] || TEMPLATES["블라썸"];
+function render(row){
+  const ex = row.extra || {};
+  const t = TEMPLATES[row.template] || TEMPLATES["블라썸"];
   document.documentElement.style.setProperty("--bg", t.bg);
   document.documentElement.style.setProperty("--accent", t.accent);
 
-  const groom = esc(inv.groom || "신랑"), bride = esc(inv.bride || "신부");
+  const spec = LAYOUTS[ex.layout] || LAYOUTS["클래식"];
+  const groom = esc(row.groom || "신랑"), bride = esc(row.bride || "신부");
+  const namesStr = `${groom} · ${bride}`;
   document.title = `${groom} ♥ ${bride} 결혼합니다`;
 
-  const cover = inv.cover_path
-    ? `<img class="cover" src="${publicURL(inv.cover_path)}" alt="">`
-    : `<div class="cover cover-empty">🌷</div>`;
+  const coverUrl = row.cover_path ? pub(row.cover_path) : null;
+  const dateFull = fmtDate(row.wedding_date);
 
-  const gallery = (inv.photo_paths && inv.photo_paths.length)
-    ? `<div class="gallery">${inv.photo_paths.map(p=>`<img src="${publicURL(p)}" alt="">`).join("")}</div>`
-    : "";
-
-  const where = [inv.venue_name, inv.venue_hall].filter(Boolean).map(esc).join(" ");
-
-  let map = "";
-  if(inv.show_map && inv.venue_lat && inv.venue_lng){
-    const la = inv.venue_lat, ln = inv.venue_lng;
-    const bbox = `${ln-0.004},${la-0.003},${ln+0.004},${la+0.003}`;
-    map = `<div class="map"><iframe loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${la},${ln}"></iframe></div>
-      <a class="dirs" href="https://www.google.com/maps/search/?api=1&query=${la},${ln}" target="_blank" rel="noopener">📍 길찾기</a>`;
-  } else if(inv.venue_address){
-    map = `<div class="info"><div class="where">${esc(inv.venue_address)}</div></div>`;
+  // 헤더(이름). 오버레이는 커버 안에 이름을 넣으므로 본문 헤더 생략.
+  const nameStyle = `font-size:${spec.size}px;${spec.serif?'font-family:"Nanum Myeongjo",Georgia,serif;':''}`;
+  let header = "";
+  if(spec.cover !== "overlay"){
+    header = `
+      ${spec.eyebrow ? `<div class="eyebrow">결혼합니다</div>` : ""}
+      <div class="names" style="${nameStyle}">${namesStr}</div>
+      <div class="rule"></div>`;
   }
 
-  const contact = inv.contact_phone
-    ? `<a class="contact" href="tel:${esc(inv.contact_phone)}">📞 연락하기</a>` : "";
+  // 혼주
+  const gl = parentsLine(ex.groom_father, ex.groom_mother, ex.groom_order||"아들", row.groom);
+  const bl = parentsLine(ex.bride_father, ex.bride_mother, ex.bride_order||"딸", row.bride);
+  const parents = (gl||bl) ? `<div class="parents">${[gl,bl].filter(Boolean).join("<br>")}</div>` : "";
+
+  // 멘트
+  const gtitle = trim(ex.greeting_title) ? `<div class="gtitle" style="${spec.serif?'font-family:\"Nanum Myeongjo\",serif;':''}">${esc(ex.greeting_title)}</div>` : "";
+  const closing = trim(ex.closing) ? `<div class="closing">${esc(ex.closing)}</div>` : "";
+
+  // 갤러리
+  const paths = row.photo_paths || [];
+  const caps = ex.captions || [];
+  const photos = paths.map((p,i)=>({url:pub(p), caption:caps[i]||""}));
+  const gstyle = trim(ex.gallery_style) || (spec.gallery==="vertical" ? "세로" : "슬라이더");
+  const gallery = galleryHTML(gstyle, photos);
+
+  // 큰 날짜(캘린더)
+  const bigdate = spec.bigDate ? `<div class="bigdate"><div class="d">${numericDate(row.wedding_date)}</div><div class="w">${weekdayTime(row.wedding_date)}</div></div>` : "";
+
+  // 정보(날짜는 캘린더면 생략)
+  const where = [row.venue_name, row.venue_hall].filter(Boolean).map(esc).join(" ");
+  const info = `<div class="info">${spec.bigDate?"":`<div class="when">${dateFull}</div>`}${where?`<div class="where">${where}</div>`:""}</div>`;
+
+  // 지도
+  let map = "";
+  if(row.show_map && row.venue_lat && row.venue_lng){
+    const la=row.venue_lat, ln=row.venue_lng;
+    const bbox=`${ln-0.004},${la-0.003},${ln+0.004},${la+0.003}`;
+    map = `<div class="map"><iframe loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${la},${ln}"></iframe></div>
+      <a class="dirs" href="https://www.google.com/maps/search/?api=1&query=${la},${ln}" target="_blank" rel="noopener">📍 길찾기</a>`;
+  } else if(row.venue_address){
+    map = `<div class="info"><div class="where">${esc(row.venue_address)}</div></div>`;
+  }
+
+  // 계좌
+  let account = "";
+  const ga=trim(ex.groom_account), ba=trim(ex.bride_account);
+  if(ga||ba){
+    const rowFor=(side,val)=>`<div class="acc-row"><span class="side">${side}</span><span class="val">${esc(val)}</span><button onclick="copyAcc(this,'${esc(val).replace(/'/g,"\\'")}')">⧉</button></div>`;
+    account = `<div class="account"><div class="h">마음 전하실 곳</div>${ga?rowFor("신랑측",ga):""}${ba?rowFor("신부측",ba):""}</div>`;
+  }
+
+  const contact = trim(row.contact_phone) ? `<a class="contact" href="tel:${esc(row.contact_phone)}">📞 연락하기</a>` : "";
 
   root.innerHTML = `
     <div class="card">
-      ${cover}
-      <div class="body">
-        <div class="eyebrow">결혼합니다</div>
-        <div class="names serif">${groom} · ${bride}</div>
-        <div class="rule"></div>
-        <div class="greeting">${esc(inv.greeting || "")}</div>
+      ${coverHTML(spec, coverUrl, namesStr, dateFull)}
+      <div class="body ${spec.align==='left'?'left':''}">
+        ${header}
+        ${bigdate}
+        ${parents}
+        ${gtitle}
+        <div class="greeting">${esc(row.greeting || "")}</div>
+        ${closing}
         ${gallery}
-        <div class="info">
-          <div class="when">${fmtDate(inv.wedding_date)}</div>
-          ${where ? `<div class="where">${where}</div>` : ""}
-        </div>
+        ${info}
         ${map}
+        ${account}
         ${contact}
       </div>
     </div>
@@ -137,10 +271,9 @@ function render(inv){
 
 async function load(){
   const id = new URLSearchParams(location.search).get("id");
-  if(!id){ return showState("잘못된 링크예요."); }
-  if(SUPABASE_URL.includes("YOUR_PROJECT")){ return showState("아직 준비 중이에요."); }
+  if(!id) return showState("잘못된 링크예요.");
+  if(SUPABASE_URL.includes("YOUR_PROJECT")) return showState("아직 준비 중이에요.");
   try{
-    // 새 publishable 키는 JWT가 아니라 apikey 헤더로만 보낸다(Authorization Bearer 금지).
     const r = await fetch(`${SUPABASE_URL}/rest/v1/invitations?id=eq.${encodeURIComponent(id)}&select=*`,
       {headers:{apikey:SUPABASE_ANON}});
     if(!r.ok) throw new Error(r.status);
