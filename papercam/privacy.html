@@ -51,16 +51,16 @@
     <p>Photos are captured and processed <strong>on your device</strong>. The default crayon / colored-pencil style is applied entirely on-device. A photo is saved to your Photos library <strong>only when you tap the Save button</strong> — nothing is saved automatically.</p>
 
     <h2>AI redraw (optional, third party)</h2>
-    <p>PaperCam offers an optional "Redraw with AI" feature. <strong>Only when you tap it</strong>, the cropped image inside the paper-camera window is sent to our AI image provider, <strong>OpenRouter</strong> (which routes the request to an image model), so it can be redrawn in the style you chose. Key points:</p>
+    <p>PaperCam offers an optional "Redraw with AI" feature. <strong>Only when you tap it</strong>, the cropped image inside the paper-camera window is sent to the <strong>PaperCam server</strong>, which forwards it to our AI image provider, <strong>OpenRouter</strong> (which routes the request to an image model), so it can be redrawn in the style you chose. Key points:</p>
     <ul>
       <li>This happens <strong>only on your explicit tap</strong> — if you never use "Redraw with AI," no image ever leaves your device.</li>
-      <li>Only the cropped window image is sent. We do not attach your name, email, account, contacts, or location — the app has none of these.</li>
-      <li>The image is sent solely to generate your stylized result and is returned to your device. PaperCam does not store your photos on any server of ours; we keep no copies.</li>
+      <li>Only the cropped window image is sent, together with a random per-install identifier used solely to enforce a daily usage limit. We do not attach your name, email, account, contacts, or location — the app has none of these.</li>
+      <li>The image is used solely to generate your stylized result and is returned to your device. The PaperCam server does not store your photos; we keep no copies.</li>
       <li>Handling of the request by the AI provider is governed by OpenRouter's own privacy policy: <a href="https://openrouter.ai/privacy">https://openrouter.ai/privacy</a>.</li>
     </ul>
 
     <h2>API key</h2>
-    <p>If you enter your own OpenRouter API key in Settings, it is stored <strong>only on your device</strong> and used only to authenticate your AI redraw requests. It is never sent to us.</p>
+    <p>You do not need a key to use AI redraw — it works through the PaperCam server. Optionally, if you enter your own OpenRouter API key in Settings, it is stored <strong>only on your device</strong>, used to send AI redraw requests directly to OpenRouter, and is never sent to the PaperCam server.</p>
 
     <h2>Information we do NOT collect</h2>
     <p>PaperCam has no login and does not collect your name, email, phone number, location, contacts, or advertising identifiers. We use no third-party analytics or advertising SDKs, and we do not track you across apps or websites.</p>
