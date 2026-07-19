@@ -164,9 +164,21 @@
     background:rgba(255,255,255,.16);color:#fff;font-size:22px;cursor:pointer}
   .lb-count{position:absolute;bottom:calc(18px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:rgba(255,255,255,.85);font-size:13px}
 
+  /* 폰트 무드 — 기본(명조)은 위 .serif 규칙, 고딕/손글씨는 아래로 덮어씀 */
+  body.f-gothic .serif,body.f-gothic .names,body.f-gothic .gtitle,body.f-gothic .greeting,body.f-gothic .bigdate .d,body.f-gothic .dday-num,body.f-gothic .cover-overlay .otext .nm,body.f-gothic .cover-polaroid .pcap{
+    font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+  body.f-script .names,body.f-script .gtitle,body.f-script .dday-num,body.f-script .cover-overlay .otext .nm,body.f-script .cover-polaroid .pcap{
+    font-family:"Nanum Pen Script","Nanum Myeongjo",cursive;font-weight:400;letter-spacing:.5px}
+
+  /* 배경 이펙트 — 은은하게 */
+  .fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:5}
+  .fx span{position:absolute;top:-8%;opacity:.5;will-change:transform;animation:fall linear infinite}
+  @keyframes fall{to{transform:translateY(114vh) rotate(220deg)}}
+
   @media (prefers-reduced-motion: reduce){
     .reveal{opacity:1;transform:none;transition:none}
     .card,.cover-full,.cover-arch .img,.cover-framed .img,.cover-circle .img,.cover-polaroid .img,.cover-overlay .img,.cover-overlay .otext{animation:none}
+    .fx{display:none}
   }
 </style>
 </head>
@@ -186,6 +198,9 @@ const TEMPLATES = {
   "블라썸": {bg:"#F5E6E6", accent:"#C26B78", text:"#873E4B"},
   "클래식": {bg:"#FAF7F0", accent:"#D1A359", text:"#76531B"},
   "모던":   {bg:"#F2F2F5", accent:"#2B2621", text:"#2B2621"},
+  "세이지": {bg:"#EDF0EA", accent:"#6B7A5E", text:"#47523B"},
+  "더스티블루": {bg:"#E7ECEF", accent:"#6E8593", text:"#42545F"},
+  "모카":   {bg:"#F1EAE3", accent:"#A6825E", text:"#6E4F33"},
 };
 
 const LAYOUTS = {
@@ -267,6 +282,12 @@ function render(row){
   document.documentElement.style.setProperty("--bg", t.bg);
   document.documentElement.style.setProperty("--accent", t.accent);
   document.documentElement.style.setProperty("--accent-text", t.text);
+
+  // 폰트 무드
+  const fontClass = {"명조":"f-myeongjo","고딕":"f-gothic","손글씨":"f-script"}[ex.font] || "f-myeongjo";
+  document.body.className = fontClass;
+  // 배경 이펙트
+  setupEffect(ex.effect);
 
   const spec = LAYOUTS[ex.layout] || LAYOUTS["클래식"];
   const groom = esc(row.groom || "신랑"), bride = esc(row.bride || "신부");
@@ -410,6 +431,25 @@ function ddayHTML(iso){
   const label = days > 0 ? `결혼식까지 ${days}일 남았어요`
     : days === 0 ? "오늘, 결혼합니다" : `함께한 지 ${-days}일`;
   return `<div class="dday"><div class="dday-num">${num}</div><div class="dday-label">${label}</div></div>`;
+}
+
+// 배경 이펙트 — 은은한 꽃잎/눈 파티클. 모션 최소화 설정이면 생략.
+function setupEffect(name){
+  document.querySelector(".fx")?.remove();
+  if(name !== "꽃잎" && name !== "눈") return;
+  if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const ch = name === "꽃잎" ? "🌸" : "❄";
+  const fx = document.createElement("div"); fx.className = "fx"; fx.setAttribute("aria-hidden","true");
+  for(let i=0;i<14;i++){
+    const s = document.createElement("span");
+    s.textContent = ch;
+    s.style.left = (Math.random()*100) + "%";
+    s.style.fontSize = (10 + Math.random()*10) + "px";
+    s.style.animationDuration = (7 + Math.random()*7) + "s";
+    s.style.animationDelay = (-Math.random()*10) + "s";
+    fx.appendChild(s);
+  }
+  document.body.appendChild(fx);
 }
 
 // 스크롤 리빌 — 커버를 제외한 섹션이 뷰포트에 들어올 때 스르륵 등장.
