@@ -51,12 +51,13 @@
     <p>Photos are captured and processed <strong>on your device</strong>. The default crayon / colored-pencil style is applied entirely on-device. A photo is saved to your Photos library <strong>only when you tap the Save button</strong> — nothing is saved automatically.</p>
 
     <h2>AI redraw (optional, third party)</h2>
-    <p>PaperCam offers an optional "Redraw with AI" feature. <strong>Only when you tap it</strong>, the cropped image inside the paper-camera window is sent to the <strong>PaperCam server</strong>, which forwards it to our AI image provider, <strong>OpenRouter</strong> (which routes the request to an image model), so it can be redrawn in the style you chose. Key points:</p>
+    <p>PaperCam offers an optional "Redraw with AI" feature. <strong>Only when you tap it</strong>, the cropped image inside the paper-camera window is sent to the <strong>PaperCam server</strong>, which forwards it to <strong>OpenRouter</strong>, which in turn routes the request to the image model provider <strong>OpenAI</strong> (model <code>gpt-image-1</code>), so it can be redrawn in the style you chose. Key points:</p>
     <ul>
-      <li>This happens <strong>only on your explicit tap</strong> — if you never use "Redraw with AI," no image ever leaves your device.</li>
+      <li><strong>We ask first.</strong> Before any image is sent for the first time, the app shows a consent screen naming exactly what is sent and who receives it, and nothing is transmitted unless you tap to allow it. You can withdraw consent at any time in Settings, under "AI 전송 동의"; once withdrawn, no further images are sent.</li>
+      <li>If you decline, the app still works — the crayon / colored-pencil style is produced entirely on your device.</li>
       <li>Only the cropped window image is sent, together with a random per-install identifier used solely to enforce a daily usage limit. We do not attach your name, email, account, contacts, or location — the app has none of these.</li>
-      <li>The image is used solely to generate your stylized result and is returned to your device. The PaperCam server does not store your photos; we keep no copies.</li>
-      <li>Handling of the request by the AI provider is governed by OpenRouter's own privacy policy: <a href="https://openrouter.ai/privacy">https://openrouter.ai/privacy</a>.</li>
+      <li>The image is used solely to generate your stylized result and is returned to your device. It is processed only for the duration of that request. The PaperCam server does not store your photos; we keep no copies, and we do not use your images for advertising or to train models.</li>
+      <li>Handling of the request by these providers is governed by their own privacy policies, which provide protections equivalent to those described here: OpenRouter — <a href="https://openrouter.ai/privacy">https://openrouter.ai/privacy</a>; OpenAI — <a href="https://openai.com/policies/privacy-policy">https://openai.com/policies/privacy-policy</a>.</li>
     </ul>
 
     <h2>API key</h2>
